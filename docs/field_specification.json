@@ -1,0 +1,74 @@
+{
+  "version": "1.0",
+  "fields": [
+    {
+      "name": "business_name",
+      "type": "string",
+      "normalization": "Trim whitespace; compare names case-insensitively."
+    },
+    {
+      "name": "requested_effective_date",
+      "type": "YYYY-MM-DD or null",
+      "normalization": "A valid calendar date; no past or future date rule."
+    },
+    {
+      "name": "garaging_state",
+      "type": "two-letter string or null",
+      "normalization": "Normalize California / CA to CA."
+    },
+    {
+      "name": "operations_description",
+      "type": "string or null",
+      "normalization": "Preserve the source meaning; no eligibility rule."
+    },
+    {
+      "name": "declared_vehicle_count",
+      "type": "integer or null",
+      "normalization": "An applicant-stated count from the email or PDF."
+    },
+    {
+      "name": "operating_radius_miles",
+      "type": "number or null",
+      "normalization": "Numeric miles; 150 is allowed and 150.1 is flagged."
+    },
+    {
+      "name": "hazardous_materials",
+      "type": "boolean or null",
+      "normalization": "Explicit Yes / true or No / false; absence is not No."
+    },
+    {
+      "name": "loss_runs_present",
+      "type": "boolean or null",
+      "normalization": "Determine from actual supplied attachments."
+    },
+    {
+      "name": "schedule_vehicle_count",
+      "type": "integer or null",
+      "normalization": "Derived from nonblank vehicle records after the CSV header."
+    }
+  ],
+  "field_states": [
+    "KNOWN",
+    "MISSING",
+    "CONFLICT",
+    "INVALID"
+  ],
+  "evidence": {
+    "required_for_each_extracted_or_derived_value": [
+      "source_file",
+      "locator",
+      "excerpt_or_observation"
+    ],
+    "locator_examples": [
+      "email body",
+      "PDF page 1",
+      "CSV data rows 1-3 (header excluded)",
+      "uploaded attachment inventory"
+    ],
+    "absence": "Record the inspected source set for missing fields or absent documents. Do not invent a quotation for absent information."
+  },
+  "conflicts": "If explicit normalized values in the email and PDF disagree, keep alternatives and evidence, set the unresolved field value to null with state CONFLICT, and do not choose a preferred source. Missing mentions are not conflicting values.",
+  "csv": "Header is vehicle_id,vin,year,make,model. Count nonblank data rows; header excluded. No VIN decoding, deduplication or VIN validation is required.",
+  "manual_corrections": "Keep original evidence and conflict notes. A correction may resolve the effective value used by the rules, marked as a human override.",
+  "output_design": "Your internal JSON schema and API design are your choice. These field names and semantics form the shared evaluation contract."
+}

@@ -1,0 +1,22 @@
+From: Morgan Example <broker@example.com>
+To: Underwriting Exercise <underwriting@example.com>
+Subject: Commercial auto submission SUB-A
+
+Hello underwriting team,
+
+Please review this fictional commercial auto submission.
+Business name: Pacific Harbor Delivery Example LLC
+Requested effective date: 2026-11-01
+Garaging state: CA
+Operations: Local delivery of packaged retail goods.
+Declared vehicle count: 3
+Operating radius miles: 150
+Hazardous materials: No
+
+The application and vehicle schedule are attached.
+The loss runs report is also attached.
+
+
+Thank you,
+Morgan Example
+Fictional Broker

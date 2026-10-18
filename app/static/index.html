@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Submission Review Assistant</title>
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+<header class="topbar">
+  <div>
+    <h1>Submission Review Assistant</h1>
+    <p class="muted">Commercial auto submission intake · fictional exercise data</p>
+  </div>
+  <span id="model-pill" class="pill">Checking model…</span>
+</header>
+
+<main>
+  <section class="card" id="intake">
+    <h2>1. Load one submission packet</h2>
+    <p class="muted">Upload the packet's files (application PDF, vehicle CSV, any other attachments, and the broker email as .txt) and/or paste the broker email. Processing a packet replaces everything on screen.</p>
+    <div class="intake-grid">
+      <div>
+        <label id="dropzone" class="dropzone" for="file-input">
+          <strong>Choose files</strong> or drop them here
+          <span class="muted small">.pdf, .csv, .txt, .eml</span>
+        </label>
+        <input id="file-input" type="file" multiple accept=".pdf,.csv,.txt,.eml" hidden>
+        <ul id="file-list" class="file-list"></ul>
+      </div>
+      <div>
+        <label for="pasted-email" class="label">Broker email (optional if uploaded as .txt)</label>
+        <textarea id="pasted-email" rows="8" placeholder="Paste the broker email here…"></textarea>
+      </div>
+    </div>
+    <div class="actions">
+      <button id="process-btn" class="primary">Process packet</button>
+      <button id="clear-btn">Clear / new packet</button>
+    </div>
+  </section>
+
+  <div id="status" class="status" hidden></div>
+
+  <div id="results" hidden>
+    <section class="card overall" id="overall"></section>
+
+    <section class="card">
+      <div class="section-head">
+        <h2>2. Rule results</h2>
+        <span id="rerun-note" class="muted small"></span>
+      </div>
+      <table class="grid" id="rules-table">
+        <thead><tr><th>Rule</th><th>Status</th><th>Reason</th><th>Values used</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </section>
+
+    <section class="card">
+      <div class="section-head">
+        <h2>3. Extracted fields &amp; evidence</h2>
+        <button id="rerun-btn" class="primary" disabled>Rerun checks</button>
+      </div>
+      <p class="muted small">Correct a value with “Override”, then rerun checks. Overrides are labelled; original values and evidence are kept.</p>
+      <div id="fields"></div>
+    </section>
+
+    <section class="card">
+      <h2>4. Attachment inventory</h2>
+      <table class="grid" id="inventory-table">
+        <thead><tr><th>File</th><th>Kind</th><th>Detected type</th><th>Basis</th><th>Readable</th></tr></thead>
+        <tbody></tbody>
+      </table>
+      <details class="log"><summary>Model extraction log</summary><ul id="extraction-log"></ul></details>
+    </section>
+
+    <section class="card">
+      <div class="section-head">
+        <h2>5. AI underwriter summary</h2>
+        <button id="narrative-btn">Regenerate summary &amp; draft</button>
+      </div>
+      <div id="narrative-status" class="muted small"></div>
+      <div id="summary" class="summary"></div>
+    </section>
+
+    <section class="card">
+      <h2>6. Draft email to broker <span class="pill warn">Draft only · not sent</span></h2>
+      <label class="label" for="email-subject">Subject</label>
+      <input id="email-subject" type="text">
+      <label class="label" for="email-body">Body</label>
+      <textarea id="email-body" rows="14"></textarea>
+      <div class="actions"><button id="copy-btn">Copy draft</button><span id="copy-note" class="muted small"></span></div>
+
+      <div id="send-panel" class="send-panel">
+        <h3>Send after review <span class="muted small">(optional connector)</span></h3>
+        <div id="send-disabled" class="muted small" hidden>Sending is disabled — draft-only mode, as the exercise requires. To enable the Gmail / Outlook connectors set <code>ENABLE_EMAIL_SEND=true</code> (see README).</div>
+        <div id="send-enabled" hidden>
+          <div id="providers" class="providers"></div>
+          <label class="label" for="email-to">To</label>
+          <input id="email-to" type="text" placeholder="broker@example.com">
+          <div class="actions">
+            <button id="send-btn" class="primary" disabled>Review &amp; send…</button>
+            <span id="send-note" class="muted small"></span>
+          </div>
+          <div id="send-confirm" class="send-confirm" hidden></div>
+          <ul id="sent-log" class="sent-log"></ul>
+        </div>
+      </div>
+    </section>
+  </div>
+</main>
+
+<template id="override-tpl">
+  <div class="override-form">
+    <input class="ov-value" type="text" placeholder="Corrected value">
+    <input class="ov-note" type="text" placeholder="Reason (optional)">
+    <button class="ov-apply primary small-btn">Apply</button>
+    <button class="ov-cancel small-btn">Cancel</button>
+  </div>
+</template>
+
+<script src="/static/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,67 @@
+{
+  "version": "1.0",
+  "fictional_exercise_only": true,
+  "statuses": [
+    "PASS",
+    "FLAG",
+    "UNKNOWN"
+  ],
+  "overall_status": "NEEDS_REVIEW if any rule is FLAG or UNKNOWN; otherwise READY_FOR_REVIEW. Neither status is a coverage or binding decision.",
+  "rules": [
+    {
+      "id": "R1",
+      "name": "Required identity and effective date",
+      "inputs": [
+        "business_name",
+        "requested_effective_date"
+      ],
+      "pass": "Both values are present, valid and non-conflicting.",
+      "flag": "At least one value is absent.",
+      "unknown": "No value is absent, but at least one is invalid or conflicting.",
+      "precedence": "FLAG for absent values takes precedence over UNKNOWN for other unresolved values."
+    },
+    {
+      "id": "R2",
+      "name": "Vehicle count reconciliation",
+      "inputs": [
+        "declared_vehicle_count",
+        "schedule_vehicle_count"
+      ],
+      "pass": "Both are valid nonnegative integers and equal.",
+      "flag": "Both are valid nonnegative integers and different.",
+      "unknown": "Either count is absent, invalid or conflicting; or the CSV cannot be parsed."
+    },
+    {
+      "id": "R3",
+      "name": "Operating radius",
+      "inputs": [
+        "operating_radius_miles"
+      ],
+      "pass": "A valid non-conflicting radius is less than or equal to 150 miles.",
+      "flag": "A valid non-conflicting radius is greater than 150 miles.",
+      "unknown": "Radius is absent, conflicting, negative or not numeric.",
+      "threshold_miles": 150,
+      "operator": "greater_than"
+    },
+    {
+      "id": "R4",
+      "name": "Hazardous materials",
+      "inputs": [
+        "hazardous_materials"
+      ],
+      "pass": "The explicit non-conflicting value is false or No.",
+      "flag": "The explicit non-conflicting value is true or Yes.",
+      "unknown": "Value is absent, ambiguous or conflicting."
+    },
+    {
+      "id": "R5",
+      "name": "Loss runs attachment",
+      "inputs": [
+        "loss_runs_present"
+      ],
+      "pass": "At least one supplied readable document is explicitly a loss runs or loss history report.",
+      "flag": "No loss runs or loss history document is attached. A promise or statement in the email does not count.",
+      "unknown": "A supplied potential loss runs attachment cannot be read or its document type cannot be determined."
+    }
+  ]
+}

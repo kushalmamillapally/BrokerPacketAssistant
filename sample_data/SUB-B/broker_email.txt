@@ -1,0 +1,22 @@
+From: Morgan Example <broker@example.com>
+To: Underwriting Exercise <underwriting@example.com>
+Subject: Commercial auto submission SUB-B
+
+Hello underwriting team,
+
+Please review this fictional commercial auto submission.
+Business name: Canyon Parcel Example LLC
+Requested effective date: Not provided
+Garaging state: CA
+Operations: Local delivery of packaged retail goods.
+Declared vehicle count: 2
+Operating radius miles: Not provided
+Hazardous materials: Not provided
+
+The application and vehicle schedule are attached.
+Loss runs are not attached; we will send them separately.
+
+
+Thank you,
+Morgan Example
+Fictional Broker
